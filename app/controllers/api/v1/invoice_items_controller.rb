@@ -13,6 +13,10 @@ respond_to :json
     respond_with InvoiceItem.find_by(invoice_items_params)
   end
 
+  def find_all
+    respond_with InvoiceItem.where(invoice_items_params)
+  end
+
   private
 
   def invoice_items_params
