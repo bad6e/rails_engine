@@ -17,6 +17,7 @@ gem "figaro"
 gem "githubstats"
 gem 'rails_12factor'
 gem 'bcrypt', '~> 3.1.7'
+gem 'responders'
 
 group :development, :test do
   gem "rspec-rails"
