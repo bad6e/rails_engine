@@ -21,9 +21,17 @@ class Api::V1::TransactionsController < ApplicationController
     respond_with Transaction.limit(1).order("RANDOM()")
   end
 
+  def invoice
+    respond_with find_transactions.invoice
+  end
+
   private
 
   def transaction_params
     params.permit(:id, :invoice_id, :credit_card_number, :credit_card_expiration_date, :result, :created_at, :updated_at)
+  end
+
+  def find_transactions
+    Transaction.find_by(id: params[:transaction_id])
   end
 end
