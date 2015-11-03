@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151103002151) do
+ActiveRecord::Schema.define(version: 20151103011231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,11 +65,11 @@ ActiveRecord::Schema.define(version: 20151103002151) do
 
   create_table "transactions", force: :cascade do |t|
     t.integer  "invoice_id"
-    t.string   "cc_number"
-    t.date     "cc_exp_date"
+    t.string   "credit_card_number"
+    t.date     "credit_card_expiration_date"
     t.string   "result"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "transactions", ["invoice_id"], name: "index_transactions_on_invoice_id", using: :btree
