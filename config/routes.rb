@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       end
 
       resources :merchants, only: [:index, :show] do
+        get '/items', to: 'merchants#items'
+        get '/invoices', to: 'merchants#invoices'
         collection do
           get 'find'
           get 'find_all'

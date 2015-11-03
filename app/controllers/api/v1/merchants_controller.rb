@@ -6,7 +6,7 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def show
-    respond_with Merchant.find_by(id: params[:id])
+    respond_with Merchant.find(id: params[:id])
   end
 
   def find
@@ -19,6 +19,16 @@ class Api::V1::MerchantsController < ApplicationController
 
   def random
     respond_with Merchant.limit(1).order("RANDOM()")
+  end
+
+  def items
+    merchant = Merchant.find_by(id: params[:merchant_id])
+    respond_with merchant.items
+  end
+
+  def invoices
+    merchant = Merchant.find_by(id: params[:merchant_id])
+    respond_with merchant.invoices
   end
 
   private
