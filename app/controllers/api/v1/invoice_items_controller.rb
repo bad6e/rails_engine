@@ -17,6 +17,10 @@ respond_to :json
     respond_with InvoiceItem.where(invoice_items_params)
   end
 
+  def random
+    respond_with InvoiceItem.limit(1).order("RANDOM()")
+  end
+
   private
 
   def invoice_items_params
