@@ -6,7 +6,7 @@ respond_to :json
   end
 
   def show
-    respond_with InvoiceItem.find_by(id: params[:id])
+    respond_with InvoiceItem.find(params[:id])
   end
 
   def find
