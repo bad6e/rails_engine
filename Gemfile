@@ -30,6 +30,7 @@ group :development, :test do
   gem "binding_of_caller"
   gem 'selenium-webdriver'
   gem 'simplecov', :require => false
+  gem "factory_girl_rails", "~> 4.0"
 end
 
 group :development do
