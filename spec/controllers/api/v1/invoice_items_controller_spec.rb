@@ -37,5 +37,23 @@ RSpec.describe Api::V1::InvoiceItemsController, type: :controller do
       response_data = JSON.parse(response.body)
       expect(response_data.count).to eq (1)
     end
+
+    it "returns a random merchant" do
+      get :random, format: :json
+      response_data = JSON.parse(response.body).first
+      expect(response_data["item_id"]).to eq(@item.id)
+    end
+
+    it "returns an invoice item's invoice" do
+      get :invoice, invoice_item_id: @invoice_item.id, format: :json
+      response_data = JSON.parse(response.body)
+      expect(response_data["id"]).to eq(@invoice.id)
+    end
+
+    it "returns an invoice item's item" do
+      get :item, invoice_item_id: @invoice_item.id, format: :json
+      response_data = JSON.parse(response.body)
+      expect(response_data["id"]).to eq(@item.id)
+    end
   end
 end
