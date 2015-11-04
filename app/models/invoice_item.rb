@@ -8,6 +8,6 @@ class InvoiceItem < ActiveRecord::Base
   protected
 
   def money_converter
-    self.unit_price = (self.unit_price.to_f/100).to_s
+    self.unit_price = (self.unit_price.to_f/100)
   end
 end
