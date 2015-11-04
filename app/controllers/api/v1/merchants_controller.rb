@@ -29,6 +29,11 @@ class Api::V1::MerchantsController < ApplicationController
     respond_with find_merchant.invoices
   end
 
+  def revenue
+    # binding.pry
+    revenue = find_merchant.invoices
+  end
+
   private
 
   def merchant_params

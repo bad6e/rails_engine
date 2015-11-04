@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       resources :customers, only: [:index, :show] do
         get '/invoices', to: 'customers#invoices'
         get '/transactions', to: 'customers#transactions'
-
+        get '/favorite_merchant', to: 'customers#favorite_merchant'
         collection do
           get 'find'
           get 'find_all'
@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       resources :merchants, only: [:index, :show] do
         get '/items', to: 'merchants#items'
         get '/invoices', to: 'merchants#invoices'
-
+        get '/revenue', to: 'merchants#revenue'
         collection do
           get 'find'
           get 'find_all'

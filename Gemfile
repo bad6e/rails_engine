@@ -18,6 +18,7 @@ gem "githubstats"
 gem 'rails_12factor'
 gem 'bcrypt', '~> 3.1.7'
 gem 'responders'
+gem "active_model_serializers", github: "rails-api/active_model_serializers"
 
 group :development, :test do
   gem "rspec-rails"

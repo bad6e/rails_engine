@@ -17,4 +17,7 @@ task :parse => :environment do
   file.each do |model, file|
     create_models(model, file)
   end
+
+
+
 end

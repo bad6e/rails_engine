@@ -29,13 +29,19 @@ class Api::V1::CustomersController < ApplicationController
     respond_with find_customers.transactions
   end
 
+  def favorite_merchant
+    merchant = find_customers.transactions.where(result: "success").map {|r| r.invoice.merchant}
+    id = merchant.max_by{|x| merchant.count(x)}.id
+    respond_with Merchant.find(id)
+  end
+
   private
 
   def customer_params
     params.permit(:id, :first_name, :last_name, :created_at, :updated_at)
   end
 
-   def find_customers
+  def find_customers
     Customer.find_by(id: params[:customer_id])
   end
 end
