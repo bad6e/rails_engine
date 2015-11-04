@@ -37,6 +37,10 @@ class Api::V1::MerchantsController < ApplicationController
     end
   end
 
+  def customers_with_pending_invoices
+    respond_with find_merchant.pending
+  end
+
   def favorite_customer
     customer = find_merchant.transactions.where(result: "success").map {|r| r.invoice.customer}
     id = customer.max_by{|x| customer.count(x)}.id
