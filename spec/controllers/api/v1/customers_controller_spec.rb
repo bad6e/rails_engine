@@ -45,11 +45,35 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
       expect(response_data.count).to eq (2)
     end
 
-    it "returns a random merchant" do
+    it "returns a random customer" do
       customer = Customer.create(first_name: "Bretistired", last_name: "Doucette!")
       get :random, format: :json
       response_data = JSON.parse(response.body).first
       expect(response_data["first_name"]).to eq("Bretistired")
     end
+
+    it "returns a customers's invoices" do
+      @customer_one  = Customer.create(first_name: "Bob")
+      invoice1       = Invoice.create(customer_id: @customer_one.id)
+      invoice2       = Invoice.create(customer_id: @customer_one.id)
+      invoice3       = Invoice.create(customer_id: @customer_one.id)
+
+      get :invoices, customer_id: @customer_one.id, format: :json
+      response_data = JSON.parse(response.body)
+      expect(response_data.count).to eq(3)
+    end
+
+    it "returns a customers's transacations" do
+      @customer_two      = Customer.create(first_name: "Don")
+      @invoice1          = Invoice.create(customer_id: @customer_two.id)
+      @invoice2          = Invoice.create(customer_id: @customer_two.id)
+      transaction1       = Transaction.create(invoice_id: @invoice1.id)
+      transaction2       = Transaction.create(invoice_id: @invoice2.id)
+
+      get :transactions, customer_id: @customer_two.id, format: :json
+      response_data = JSON.parse(response.body)
+      expect(response_data.count).to eq(2)
+    end
+
   end
 end

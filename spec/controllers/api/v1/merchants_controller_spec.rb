@@ -47,5 +47,27 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
       response_data = JSON.parse(response.body).first
       expect(response_data["name"]).to eq("Hi")
     end
+
+    it "returns a merchant's items" do
+      @merchant_four = Merchant.create(name: "Death")
+      item1          = Item.create(name: "A", merchant_id: @merchant_four.id)
+      item2          = Item.create(name: "B", merchant_id: @merchant_four.id)
+      item3          = Item.create(name: "C", merchant_id: @merchant_four.id)
+
+      get :items, merchant_id: @merchant_four.id, format: :json
+      response_data = JSON.parse(response.body)
+      expect(response_data.count).to eq(3)
+    end
+
+    it "returns a merchant's invoices" do
+      @merchant_five = Merchant.create(name: "Don Juan")
+      invoice1       = Invoice.create(merchant_id: @merchant_five.id)
+      invoice2       = Invoice.create(merchant_id: @merchant_five.id)
+      invoice3       = Invoice.create(merchant_id: @merchant_five.id)
+
+      get :invoices, merchant_id: @merchant_five.id, format: :json
+      response_data = JSON.parse(response.body)
+      expect(response_data.count).to eq(3)
+    end
   end
 end
