@@ -44,7 +44,7 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
       expect(response_data["id"]).to eq(@transaction.id)
     end
 
-    it "returns a transactions invoices" do
+    it "returns a transactions invoice" do
       get :invoice, transaction_id: @transaction.id, format: :json
       response_data = JSON.parse(response.body)
       expect(response_data["id"]).to eq(@invoice.id)
