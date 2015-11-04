@@ -66,11 +66,6 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
       get :merchant, item_id: item1.id, format: :json
       response_data = JSON.parse(response.body)
       expect(response_data["id"]).to eq(merchant_e.id)
-
-
-     end
-
-
-
+    end
   end
 end
