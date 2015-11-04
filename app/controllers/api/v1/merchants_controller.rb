@@ -30,7 +30,17 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def revenue
-    respond_with revenue: find_merchant.total_revenue
+    if params[:date]
+      respond_with revenue: find_merchant.date_revenue(params[:date])
+    else
+      respond_with revenue: find_merchant.total_revenue
+    end
+  end
+
+  def favorite_customer
+    customer = find_merchant.transactions.where(result: "success").map {|r| r.invoice.customer}
+    id = customer.max_by{|x| customer.count(x)}.id
+    respond_with Customer.find(id)
   end
 
   private
