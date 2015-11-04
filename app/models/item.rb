@@ -5,6 +5,8 @@ class Item < ActiveRecord::Base
 
   before_create :money_converter
 
+  default_scope { order(:id) }
+
   protected
 
   def money_converter

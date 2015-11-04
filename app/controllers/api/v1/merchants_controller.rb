@@ -37,12 +37,11 @@ class Api::V1::MerchantsController < ApplicationController
     end
   end
 
-  # def favorite_customer
-  #   customer = find_merchant.transactions.where(result: "success").map {|r| r.invoice.customer}
-  #   binding.pry
-  #   id = customer.max_by{|x| customer.count(x)}.id
-  #   respond_with Customer.find(id)
-  # end
+  def favorite_customer
+    customer = find_merchant.transactions.where(result: "success").map {|r| r.invoice.customer}
+    id = customer.max_by{|x| customer.count(x)}.id
+    respond_with Customer.find(id)
+  end
 
   private
 
