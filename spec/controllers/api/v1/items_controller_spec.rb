@@ -39,8 +39,15 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
       @item_four  = Item.create(name: "Hi")
       get :find_all, format: :json, name: @item_one.name
       response_data = JSON.parse(response.body)
-
       expect(response_data.count).to eq (2)
+    end
+
+    it "returns a random item" do
+      merchant_d = Merchant.create(name: "Late")
+      item       = Item.create(name: "Item44", merchant_id: merchant_d.id)
+      get :random, format: :json
+      response_data = JSON.parse(response.body).first
+      expect(response_data["name"]).to eq("Item44")
     end
   end
 end

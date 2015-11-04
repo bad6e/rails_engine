@@ -31,10 +31,16 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
       expect(response_data["invoice_id"]).to eq (@invoice.id)
     end
 
-    it "tests the #find_all returns all the transaction with name of Travis" do
+    it "tests the #find_all returns all the transactions" do
       get :find_all, format: :json, name: @transaction.id
       response_data = JSON.parse(response.body)
       expect(response_data.count).to eq (1)
+    end
+
+    it "returns a random transaction" do
+      get :random, format: :json
+      response_data = JSON.parse(response.body).first
+      expect(response_data["id"]).to eq(6)
     end
   end
 end

@@ -37,5 +37,11 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       response_data = JSON.parse(response.body)
       expect(response_data.count).to eq (1)
     end
+
+    it "returns a random invoice" do
+      get :random, format: :json
+      response_data = JSON.parse(response.body).first
+      expect(response_data["customer_id"]).to eq(@customer.id)
+    end
   end
 end

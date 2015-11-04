@@ -44,6 +44,12 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
 
       expect(response_data.count).to eq (2)
     end
-  end
 
+    it "returns a random merchant" do
+      customer = Customer.create(first_name: "Bretistired", last_name: "Doucette!")
+      get :random, format: :json
+      response_data = JSON.parse(response.body).first
+      expect(response_data["first_name"]).to eq("Bretistired")
+    end
+  end
 end
