@@ -37,6 +37,15 @@ class Api::V1::MerchantsController < ApplicationController
     end
   end
 
+  def most_revenue
+    respond_with Merchant.select("merchants. *, sum(invoice_items.quantity * invoice_items.unit_price) AS total_revenue")
+    .joins(:invoice_items)
+    .group("merchants.id")
+    .order("total_revenue DESC")
+    .limit(params["quantity"])
+    .merge(InvoiceItem.successful)
+  end
+
   def customers_with_pending_invoices
     respond_with find_merchant.pending
   end
