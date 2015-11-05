@@ -30,8 +30,7 @@ class Api::V1::CustomersController < ApplicationController
   end
 
   def favorite_merchant
-    id = find_customers.favorite_merchant
-    respond_with Merchant.find(id)
+    respond_with find_customers.favorite_merchant
   end
 
   private
