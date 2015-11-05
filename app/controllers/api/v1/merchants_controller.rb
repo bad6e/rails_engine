@@ -30,11 +30,7 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def revenue
-    if params[:date]
-      respond_with revenue: find_merchant.date_revenue(params[:date])
-    else
-      respond_with revenue: find_merchant.total_revenue
-    end
+    respond_with revenue: find_merchant.date_revenue(params[:date])
   end
 
   def most_revenue
@@ -46,14 +42,16 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def favorite_customer
-    id = find_merchant.favorite_customer
-    respond_with Customer.find(id)
+    respond_with find_merchant.favorite_customer
   end
 
   private
 
   def merchant_params
-    params.permit(:id, :name, :created_at, :updated_at)
+    params.permit(:id,
+                  :name,
+                  :created_at,
+                  :updated_at)
   end
 
   def find_merchant

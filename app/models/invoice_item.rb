@@ -5,7 +5,8 @@ class InvoiceItem < ActiveRecord::Base
 
   before_create :money_converter
 
-  scope :successful, -> { joins(:transactions).where("transactions.result" => "success") }
+  scope :successful, -> { joins(:transactions)
+                          .where("transactions.result" => "success") }
 
   protected
 

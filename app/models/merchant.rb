@@ -5,19 +5,20 @@ class Merchant < ActiveRecord::Base
   has_many :invoice_items, through: :invoices
   has_many :transactions, through: :invoices
 
-  def total_revenue
-    invoice_items.joins(:transactions)
-                         .where(transactions: { result: 'success' })
-                         .sum("quantity * unit_price").to_s
-  end
-
-  def date_revenue(date)
-    invoice_items.joins(:invoice)
+  def date_revenue(date = nil)
+    if date
+      invoice_items.joins(:invoice)
                          .where(invoices: { created_at: date } )
                          .joins(:transactions)
                          .where(transactions: {result: "success"} )
                          .sum("quantity * unit_price").to_s
+    else
+      invoice_items.joins(:transactions)
+                         .where(transactions: { result: 'success' })
+                         .sum("quantity * unit_price").to_s
+    end
   end
+
 
   def pending
     transactions.joins(:customers).where(transactions: { result: 'failed' })
@@ -34,8 +35,12 @@ class Merchant < ActiveRecord::Base
   end
 
   def favorite_customer
-    customer = transactions.where(result: "success").map {|r| r.invoice.customer}
-    id = customer.max_by{|x| customer.count(x)}.id
+    customers.select("customers.*, count(invoices.customer_id) AS invoice_count")
+                    .joins(invoices: :transactions)
+                    .merge(Transaction.successful)
+                    .group("customers.id")
+                    .order("invoice_count DESC")
+                    .first
   end
 end
 
