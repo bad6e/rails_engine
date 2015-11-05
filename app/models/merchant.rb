@@ -32,6 +32,11 @@ class Merchant < ActiveRecord::Base
     .limit(quantity)
     .merge(InvoiceItem.successful)
   end
+
+  def favorite_customer
+    customer = transactions.where(result: "success").map {|r| r.invoice.customer}
+    id = customer.max_by{|x| customer.count(x)}.id
+  end
 end
 
 

@@ -16,32 +16,27 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
 
     it "tests the #index returns the right invoice_item attributes" do
       get :index, format: :json
-      response_data = JSON.parse(response.body)[0]
-      expect(response_data["merchant_id"]).to eq (@merchant.id)
+      expect(response_data.first["merchant_id"]).to eq (@merchant.id)
     end
 
     it "tests the #show returns the one item" do
       get :show, format: :json, id: @invoice.id
-      response_data = JSON.parse(response.body)
       expect(response_data["merchant_id"]).to eq (@merchant.id)
     end
 
     it "tests the #find returns the invoice" do
       get :find, format: :json, id: @invoice.id
-      response_data = JSON.parse(response.body)
       expect(response_data["merchant_id"]).to eq (@merchant.id)
     end
 
     it "tests the #find_all returns all the invoice" do
       get :find_all, format: :json, name: @invoice.id
-      response_data = JSON.parse(response.body)
       expect(response_data.count).to eq (1)
     end
 
     it "returns a random invoice" do
       get :random, format: :json
-      response_data = JSON.parse(response.body).first
-      expect(response_data["customer_id"]).to eq(@customer.id)
+      expect(response_data.first["customer_id"]).to eq(@customer.id)
     end
 
     it "returns an invoices' transacations" do
@@ -52,7 +47,6 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       transacation2 = Transaction.create(invoice_id: @invoice_one.id)
 
       get :transactions, invoice_id: @invoice_one.id, format: :json
-      response_data = JSON.parse(response.body)
       expect(response_data.count).to eq(2)
     end
 
@@ -64,7 +58,6 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       ii2        = InvoiceItem.create(invoice_id: @invoice2.id)
 
       get :invoice_items, invoice_id: @invoice2.id, format: :json
-      response_data = JSON.parse(response.body)
       expect(response_data.count).to eq(2)
     end
 
@@ -79,23 +72,13 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
 
 
       get :items, invoice_id: @invoice3.id, format: :json
-      response_data = JSON.parse(response.body)
       expect(response_data.count).to eq(2)
 
       get :customer, invoice_id: @invoice3.id, format: :json
-      response_data = JSON.parse(response.body)
       expect(response_data["id"]).to eq(@customer3.id)
 
       get :merchant, invoice_id: @invoice3.id, format: :json
-      response_data = JSON.parse(response.body)
       expect(response_data["id"]).to eq(@merchant3.id)
     end
-
-
-
-
-
-
-
   end
 end
