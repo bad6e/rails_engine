@@ -73,8 +73,8 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
       @invoice1           = Invoice.create(customer_id: @customer_three.id, merchant_id: @merchant_four.id)
       @invoice2           = Invoice.create(customer_id: @customer_three.id, merchant_id: @merchant_four.id)
 
-      transaction1       = Transaction.create(invoice_id: @invoice1.id, result: 'success')
-      transaction2       = Transaction.create(invoice_id: @invoice2.id, result: 'success')
+      transaction1        = Transaction.create(invoice_id: @invoice1.id, result: 'success')
+      transaction2        = Transaction.create(invoice_id: @invoice2.id, result: 'success')
 
       get :favorite_merchant, customer_id: @customer_three.id, format: :json
       expect(response_data["name"]).to eq("Bob Jones")

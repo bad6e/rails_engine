@@ -46,8 +46,7 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def favorite_customer
-    customer = find_merchant.transactions.where(result: "success").map {|r| r.invoice.customer}
-    id = customer.max_by{|x| customer.count(x)}.id
+    id = find_merchant.favorite_customer
     respond_with Customer.find(id)
   end
 
