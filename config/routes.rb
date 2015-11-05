@@ -36,7 +36,6 @@ Rails.application.routes.draw do
       resources :items, only: [:index, :show] do
         get :invoice_items
         get :merchant
-        get :best_day
 
         collection do
             get 'find'
