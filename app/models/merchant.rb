@@ -23,6 +23,15 @@ class Merchant < ActiveRecord::Base
     transactions.joins(:customers).where(transactions: { result: 'failed' })
                 .map {|r| r.customers}.flatten.uniq
   end
+
+  def self.most_revenue(quantity)
+    select("merchants. *, sum(invoice_items.quantity * invoice_items.unit_price) AS total_revenue")
+    .joins(:invoice_items)
+    .group("merchants.id")
+    .order("total_revenue DESC")
+    .limit(quantity)
+    .merge(InvoiceItem.successful)
+  end
 end
 
 

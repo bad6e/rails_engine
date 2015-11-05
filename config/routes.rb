@@ -14,12 +14,17 @@ Rails.application.routes.draw do
         end
       end
 
+      namespace :merchants do
+        get :most_revenue
+      end
+
       resources :merchants, only: [:index, :show] do
         get :items
         get :invoices
         get :revenue
         get :favorite_customer
         get :customers_with_pending_invoices
+
 
         collection do
           get 'find'
