@@ -75,5 +75,18 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
       expect(response_data.count).to eq(2)
     end
 
+    it "returns a customers's favorite merchant" do
+      @customer_three     = Customer.create(first_name: "Don")
+      @merchant_four      = Merchant.create(name: "Bob Jones")
+      @invoice1           = Invoice.create(customer_id: @customer_three.id, merchant_id: @merchant_four.id)
+      @invoice2           = Invoice.create(customer_id: @customer_three.id, merchant_id: @merchant_four.id)
+
+      transaction1       = Transaction.create(invoice_id: @invoice1.id, result: 'success')
+      transaction2       = Transaction.create(invoice_id: @invoice2.id, result: 'success')
+
+      get :favorite_merchant, customer_id: @customer_three.id, format: :json
+      response_data = JSON.parse(response.body)
+      expect(response_data["name"]).to eq("Bob Jones")
+    end
   end
 end
