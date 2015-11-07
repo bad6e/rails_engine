@@ -19,11 +19,14 @@ Rails.application.routes.draw do
       end
 
       resources :merchants, only: [:index, :show] do
-        get :items
-        get :invoices
+        resources :items, only: [:index], module: "merchants"
+        resources :invoices, only: [:index], module: "merchants"
+
         get :revenue
         get :favorite_customer
         get :customers_with_pending_invoices
+
+
 
 
         collection do
