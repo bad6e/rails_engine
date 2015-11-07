@@ -26,9 +26,6 @@ Rails.application.routes.draw do
         get :favorite_customer
         get :customers_with_pending_invoices
 
-
-
-
         collection do
           get 'find'
           get 'find_all'
