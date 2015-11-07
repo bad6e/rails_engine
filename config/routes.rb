@@ -3,8 +3,10 @@ Rails.application.routes.draw do
     namespace :v1, defaults: {format: :json} do
 
       resources :customers, only: [:index, :show] do
-        get :invoices
-        get :transactions
+
+        resources :invoices, only: [:index], module: "customers"
+        resources :transactions, only: [:index], module: "customers"
+
         get :favorite_merchant
 
         collection do
