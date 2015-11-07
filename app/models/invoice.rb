@@ -4,4 +4,9 @@ class Invoice < ActiveRecord::Base
   has_many :transactions
   has_many :invoice_items
   has_many :items, through: :invoice_items
+
+  def self.for_invoice_item(invoice_item_id)
+    joins(:invoice_items).where(invoice_items: {id: invoice_item_id}).first
+  end
+
 end
