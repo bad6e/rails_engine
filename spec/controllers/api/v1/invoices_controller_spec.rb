@@ -51,12 +51,6 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
 
       get :items, invoice_id: @invoice3.id, format: :json
       expect(response_data.count).to eq(2)
-
-      get :customer, invoice_id: @invoice3.id, format: :json
-      expect(response_data["id"]).to eq(@customer3.id)
-
-      get :merchant, invoice_id: @invoice3.id, format: :json
-      expect(response_data["id"]).to eq(@merchant3.id)
     end
   end
 end

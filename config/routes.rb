@@ -58,9 +58,9 @@ Rails.application.routes.draw do
         resources :items, only: [:index], module: "invoice_items"
 
         collection do
-            get 'find'
-            get 'find_all'
-            get 'random'
+          get 'find'
+          get 'find_all'
+          get 'random'
         end
       end
 
@@ -81,9 +81,12 @@ Rails.application.routes.draw do
         resources :transactions, only: [:index], module: "invoices"
         resources :invoice_items, only: [:index], module: "invoices"
 
+        member do
+          get "customer", to: "invoices/customers#show"
+          get "merchant", to: "invoices/merchants#show"
+        end
+
         get :items
-        get :customer
-        get :merchant
 
         collection do
           get 'find'

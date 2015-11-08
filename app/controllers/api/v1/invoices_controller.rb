@@ -25,14 +25,6 @@ class Api::V1::InvoicesController < ApplicationController
     respond_with find_invoice.items
   end
 
-  def customer
-    respond_with find_invoice.customer
-  end
-
-  def merchant
-    respond_with find_invoice.merchant
-  end
-
   private
 
   def invoice_params
