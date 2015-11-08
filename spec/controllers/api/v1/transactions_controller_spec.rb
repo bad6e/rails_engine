@@ -37,10 +37,5 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
       get :random, format: :json
       expect(response_data.first["id"]).to eq(@transaction.id)
     end
-
-    it "returns a transactions invoice" do
-      get :invoice, transaction_id: @transaction.id, format: :json
-      expect(response_data["id"]).to eq(@invoice.id)
-    end
   end
 end

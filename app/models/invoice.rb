@@ -9,4 +9,7 @@ class Invoice < ActiveRecord::Base
     joins(:invoice_items).where(invoice_items: {id: invoice_item_id}).first
   end
 
+  def self.for_transaction(transaction_id)
+    joins(:transactions).where(transactions: {id: transaction_id}).first
+  end
 end
