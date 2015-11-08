@@ -5,6 +5,10 @@ class Merchant < ActiveRecord::Base
   has_many :invoice_items, through: :invoices
   has_many :transactions, through: :invoices
 
+  def self.for_item(id)
+    joins(:items).where(items: {id: id}).first
+  end
+
   def date_revenue(date = nil)
     if date
       invoice_items.joins(:invoice)

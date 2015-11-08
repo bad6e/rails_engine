@@ -8,6 +8,11 @@ class InvoiceItem < ActiveRecord::Base
   scope :successful, -> { joins(:transactions)
                           .where("transactions.result" => "success") }
 
+
+  def self.invoice_items_for_item(item_id)
+    joins(:item).where(items: {id: item_id})
+  end
+
   protected
 
   def money_converter
