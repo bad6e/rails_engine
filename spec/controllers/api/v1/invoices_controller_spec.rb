@@ -39,28 +39,6 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       expect(response_data.first["customer_id"]).to eq(@customer.id)
     end
 
-    it "returns an invoices' transacations" do
-      @customer_one = Customer.create
-      @merchant_one = Merchant.create
-      @invoice_one  = Invoice.create(customer_id: @customer_one.id, merchant_id: @merchant_one.id)
-      transacation1 = Transaction.create(invoice_id: @invoice_one.id)
-      transacation2 = Transaction.create(invoice_id: @invoice_one.id)
-
-      get :transactions, invoice_id: @invoice_one.id, format: :json
-      expect(response_data.count).to eq(2)
-    end
-
-    it "returns an invoice's invoice_items" do
-      @customer2 = Customer.create
-      @merchant2 = Merchant.create
-      @invoice2  = Invoice.create(customer_id: @customer2.id, merchant_id: @merchant2.id)
-      ii1        = InvoiceItem.create(invoice_id: @invoice2.id)
-      ii2        = InvoiceItem.create(invoice_id: @invoice2.id)
-
-      get :invoice_items, invoice_id: @invoice2.id, format: :json
-      expect(response_data.count).to eq(2)
-    end
-
     it "returns an invoice's items, an invoice customer, and an invoice merchant" do
       @customer3 = Customer.create
       @merchant3 = Merchant.create
