@@ -3,8 +3,9 @@ Rails.application.routes.draw do
     namespace :v1, defaults: {format: :json} do
 
       resources :customers, only: [:index, :show] do
-        get :invoices
-        get :transactions
+        resources :invoices, only: [:index], module: "customers"
+        resources :transactions, only: [:index], module: "customers"
+
         get :favorite_merchant
 
         collection do
@@ -19,12 +20,12 @@ Rails.application.routes.draw do
       end
 
       resources :merchants, only: [:index, :show] do
-        get :items
-        get :invoices
+        resources :items, only: [:index], module: "merchants"
+        resources :invoices, only: [:index], module: "merchants"
+
         get :revenue
         get :favorite_customer
         get :customers_with_pending_invoices
-
 
         collection do
           get 'find'
@@ -34,8 +35,11 @@ Rails.application.routes.draw do
       end
 
       resources :items, only: [:index, :show] do
-        get :invoice_items
-        get :merchant
+        resources :invoice_items, only: [:index], module: "items"
+
+        member do
+          get "merchant", to: "items/merchants#show"
+        end
 
         collection do
             get 'find'
@@ -45,18 +49,26 @@ Rails.application.routes.draw do
       end
 
       resources :invoice_items, only: [:index, :show] do
-        get :invoice
-        get :item
+
+        member do
+          get "invoice", to: "invoice_items/invoices#show"
+          get "item", to: "invoice_items/items#show"
+        end
+
+        resources :items, only: [:index], module: "invoice_items"
 
         collection do
-            get 'find'
-            get 'find_all'
-            get 'random'
+          get 'find'
+          get 'find_all'
+          get 'random'
         end
       end
 
       resources :transactions, only: [:index, :show] do
-        get :invoice
+
+        member do
+          get "invoice", to: "transactions/invoices#show"
+        end
 
         collection do
             get 'find'
@@ -66,16 +78,19 @@ Rails.application.routes.draw do
       end
 
       resources :invoices, only: [:index, :show] do
-        get :transactions
-        get :invoice_items
-        get :items
-        get :customer
-        get :merchant
+        resources :transactions, only: [:index], module: "invoices"
+        resources :invoice_items, only: [:index], module: "invoices"
+        resources :items, only: [:index], module: "invoices"
+
+        member do
+          get "customer", to: "invoices/customers#show"
+          get "merchant", to: "invoices/merchants#show"
+        end
 
         collection do
-            get 'find'
-            get 'find_all'
-            get 'random'
+          get 'find'
+          get 'find_all'
+          get 'random'
         end
       end
     end

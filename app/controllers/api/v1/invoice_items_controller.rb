@@ -21,14 +21,6 @@ class Api::V1::InvoiceItemsController < ApplicationController
     respond_with InvoiceItem.limit(1).order("RANDOM()")
   end
 
-  def invoice
-    respond_with find_invoice_item.invoice
-  end
-
-  def item
-    respond_with find_invoice_item.item
-  end
-
   private
 
   def invoice_items_params

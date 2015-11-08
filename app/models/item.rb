@@ -6,6 +6,14 @@ class Item < ActiveRecord::Base
 
   default_scope { order(:id) }
 
+  def self.for_invoices(invoice_id)
+    joins(:invoice_items).where(invoice_items: {invoice_id: invoice_id})
+  end
+
+  def self.for_invoice_item(invoice_item_id)
+    joins(:invoice_items).where(invoice_items: {id: invoice_item_id}).first
+  end
+
   protected
 
   def money_converter
