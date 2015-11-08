@@ -38,15 +38,5 @@ RSpec.describe Api::V1::InvoiceItemsController, type: :controller do
       get :random, format: :json
       expect(response_data.first["item_id"]).to eq(@item.id)
     end
-
-    it "returns an invoice item's invoice" do
-      get :invoice, invoice_item_id: @invoice_item.id, format: :json
-      expect(response_data["id"]).to eq(@invoice.id)
-    end
-
-    it "returns an invoice item's item" do
-      get :item, invoice_item_id: @invoice_item.id, format: :json
-      expect(response_data["id"]).to eq(@item.id)
-    end
   end
 end
